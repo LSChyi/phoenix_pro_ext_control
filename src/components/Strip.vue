@@ -37,6 +37,7 @@ function changeColor() {
   dataToWrite[4] = colorObj.r;
   dataToWrite[5] = colorObj.g;
   dataToWrite[6] = colorObj.b;
+  console.log(props.device);
   props.device.sendReport(0, dataToWrite);
 }
 
