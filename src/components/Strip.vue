@@ -34,10 +34,13 @@ function getReportIdx() {
     for (const info in infos) {
       const outputReports = infos[info].outputReports;
       if (outputReports && outputReports.length) {
+        console.log("reportId is %d", outputReports[0].reportId)
         return outputReports[0].reportId;
       }
     }
   }
+  alert("Cannot get reportId, transaction may fail");
+  return 0;
 }
 
 function changeColor() {
