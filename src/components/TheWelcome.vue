@@ -7,7 +7,7 @@ const dongleDevice = ref(null);
 
 function connect() {
   try {
-    let deviceFilter = { vendorId: 0x1209, productId: 0x2304 };
+    let deviceFilter = { usagePage: 0xff60, usage: 0x61 };
     let requestParams = { filters: [deviceFilter] };
     navigator.hid.requestDevice(requestParams)
       .then((devices) => {
