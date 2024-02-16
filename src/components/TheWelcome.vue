@@ -41,6 +41,14 @@ function connect() {
     alert("Cannot connect to dongle");
   }
 }
+
+function enter_dfu() {
+  let dataToWrite = new Uint8Array(32);
+  dataToWrite[0] = 0x07;
+  dataToWrite[1] = 0x02;
+  dongleDevice.value.sendReport(reportIdx.value, dataToWrite);
+  alert("Request to enter DFU mode, please check is the USB driver appears");
+}
 </script>
 
 <template>
@@ -49,6 +57,10 @@ function connect() {
     <Strip part="額頭" :reportIdx="reportIdx" :offset="1" :device="dongleDevice" />
     <Strip part="左胸" :reportIdx="reportIdx" :offset="2" :device="dongleDevice" />
     <Strip part="右胸" :reportIdx="reportIdx" :offset="3" :device="dongleDevice"/>
+    <div>
+      <br />
+      <input type="button" value="Enter DFU" @click="enter_dfu" />
+    </div>
   </div>
   <div v-else>
     <button @click="connect">Connect Pro Dongle!</button>
