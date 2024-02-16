@@ -15,6 +15,10 @@ const props = defineProps({
   },
   device: {
     required: true
+  },
+  reportIdx: {
+    type: Number,
+    required: true
   }
 })
 
@@ -27,22 +31,6 @@ function hexToRgb(hex) {
   } : null;
 }
 
-function getReportIdx() {
-  const infos = props.device.collections;
-  console.log(infos);
-  if (infos) {
-    for (const info in infos) {
-      const outputReports = infos[info].outputReports;
-      if (outputReports && outputReports.length) {
-        console.log("reportId is %d", outputReports[0].reportId)
-        return outputReports[0].reportId;
-      }
-    }
-  }
-  alert("Cannot get reportId, transaction may fail");
-  return 0;
-}
-
 function changeColor() {
   let colorObj = hexToRgb(color.value)
   let dataToWrite = new Uint8Array(32);
@@ -53,7 +41,7 @@ function changeColor() {
   dataToWrite[4] = colorObj.r;
   dataToWrite[5] = colorObj.g;
   dataToWrite[6] = colorObj.b;
-  props.device.sendReport(getReportIdx(), dataToWrite);
+  props.device.sendReport(props.reportIdx, dataToWrite);
 }
 
 function changeOnEffect() {
@@ -70,7 +58,7 @@ function changeOnEffect() {
     dataToWrite[4] = 0x05;
     break;
   }
-  props.device.sendReport(getReportIdx(), dataToWrite);
+  props.device.sendReport(props.reportIdx, dataToWrite);
 }
 
 function store() {
@@ -79,7 +67,7 @@ function store() {
   dataToWrite[1] = 0x01;
   dataToWrite[2] = 0x02;
   dataToWrite[3] = props.offset;
-  props.device.sendReport(getReportIdx(), dataToWrite);
+  props.device.sendReport(props.reportIdx, dataToWrite);
 }
 
 </script>
