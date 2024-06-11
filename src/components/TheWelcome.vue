@@ -49,6 +49,15 @@ function enter_dfu() {
   dongleDevice.value.sendReport(reportIdx.value, dataToWrite);
   alert("Request to enter DFU mode, please check is the USB driver appears");
 }
+
+function clear_bonding_keys() {
+  let dataToWrite = new Uint8Array(32);
+  dataToWrite[0] = 0x07;
+  dataToWrite[1] = 0x00;
+  dataToWrite[2] = 0x05;
+  dongleDevice.value.sendReport(reportIdx.value, dataToWrite);
+  alert("Request to clear bonding keys");
+}
 </script>
 
 <template>
@@ -60,6 +69,10 @@ function enter_dfu() {
     <div>
       <br />
       <input type="button" value="Enter DFU" @click="enter_dfu" />
+    </div>
+    <div>
+      <br />
+      <input type="button" value="Clear bonding keys" @click="clear_bonding_keys" />
     </div>
   </div>
   <div v-else>
